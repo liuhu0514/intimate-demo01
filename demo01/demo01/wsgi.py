@@ -14,3 +14,8 @@ from django.core.wsgi import get_wsgi_application
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'demo01.settings')
 
 application = get_wsgi_application()
+
+"""
+web服务器会指定特殊的WSGI
+WSGI指定Web应用入口函数
+"""
