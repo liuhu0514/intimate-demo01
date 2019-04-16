@@ -5,7 +5,7 @@ from django.db import models
 
 """
 django MVT M
-ORM 对象中的 O
+ORM 对象中的 O 
 需要定义实体类
 """
 
