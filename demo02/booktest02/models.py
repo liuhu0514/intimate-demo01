@@ -11,9 +11,9 @@ class TeaInfo(models.Model):
         return self.tname
     skill.short_description = '名字'
 
-    def tsub(self):
+    def subject(self):
         return self.tsubject
-    tsub.short_description = '课程'
+    subject.short_description = '课程'
 
     def id1(self):
         return self.pk

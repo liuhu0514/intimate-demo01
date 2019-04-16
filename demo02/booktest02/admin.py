@@ -17,14 +17,14 @@ class StuInfoInline(admin.StackedInline):
 
 class TeaInfoAdmin(admin.ModelAdmin):
     # 显示字段，可以点击列头进行排序
-    list_display = ['id1', 'skill', 'tsub']
+    list_display = ['id1', 'skill', 'subject']
     # 过滤字段，过滤边框会出现在右侧
     list_filter = ['tname']
     # 搜索字段。搜索框会出现在上侧
     search_fields = ['tname', 'tsubject']
     # 分页，分页框会出现在下侧
     list_per_page = 5
-    # 添加教师的时候可以额外添加班级
+    # 添加教师的时候可以额外 添加班级
     inlines = [ClassInfoInline]
 
 
