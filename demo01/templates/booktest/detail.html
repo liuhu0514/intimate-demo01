@@ -10,11 +10,13 @@
     <h3>有以下英雄人物</h3>
     <ul>
         {% for hero in book.heroinfo_set.all %}
-            <li><a href="/booktest/herodetail/{{hero.id}}">{{hero.hname}}</a></li>
+            {# <li><a href="/booktest/herodetail/{{hero.id}}">{{hero.hname}}</a></li> #}
+            <li><a href="{% url 'booktest:herodetail' hero.id %}">{{hero.hname}}</a></li>
         {% empty %}
             <h3>该图书还没角色</h3>
         {% endfor %}
     </ul>
-    <a href="/booktest/list/">返回列表页</a>
+    {# <a href="/booktest/list/">返回列表页</a> #}
+    <a href="{% url 'booktest:booklist' %}">返回列表页</a>
 </body>
 </html>
