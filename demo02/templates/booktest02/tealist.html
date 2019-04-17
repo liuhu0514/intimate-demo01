@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>教师列表</title>
+</head>
+<body>
+    <h1>教师列表</h1>
+    <ul>
+        {% for tea in teas %}
+            <li><a href="{% url 'booktest02:class1' tea.id %}">{{tea.tname}}</a></li>
+        {% empty %}
+            <h3>暂时还没有教师</h3>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'booktest02:index' %}">返回首页</a>
+</body>
+</html>

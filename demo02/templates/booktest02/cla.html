@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>教师信息</title>
+</head>
+<body>
+    <h1>{{tea.tname}}的班级</h1>
+    <ul>
+        {% for class in tea.classinfo_set.all %}
+            <li><a href="{% url 'booktest02:student' class.id %}">{{class.cname}}</a></li>
+        {% empty %}
+            <h3>{{tea.tname}}还没有要负责的班级</h3>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'booktest02:tealist' %}">返回教师列表</a>
+</body>
+</html>

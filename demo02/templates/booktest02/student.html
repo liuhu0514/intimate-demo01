@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>班级信息</title>
+</head>
+<body>
+    <h1>{{clas.cname}}学生详情</h1>
+    <ul>
+        {% for stu in clas.stuinfo_set.all %}
+            <li><a href="#">{{stu.sname}}</a></li>
+        {% empty %}
+            <h3>{{clas.cname}}还没有学生</h3>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'booktest02:class1' clas.ctea.id %}">返回{{clas.ctea.tname}}班级列表</a>
+</body>
+</html>
