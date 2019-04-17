@@ -10,6 +10,21 @@ class BookInfo(models.Model):
     def __str__(self):
         return self.btitle
 
+    def num(self):
+        return self.pk
+
+    num.short_description = '编号'
+
+    def title(self):
+        return self.btitle
+
+    title.short_description = '书名'
+
+    def pub_date(self):
+        return self.bpub_date
+
+    pub_date.short_description = '出版时间'
+
 
 class HeroInfo(models.Model):
     hname = models.CharField(max_length=20)
@@ -20,6 +35,31 @@ class HeroInfo(models.Model):
 
     def __str__(self):
         return self.hname
+
+    def num(self):
+        return self.pk
+
+    num.short_description = '编号'
+
+    def name(self):
+        return self.hname
+
+    name.short_description = '名字'
+
+    def sex(self):
+        return self.hgender
+
+    sex.short_description = '性别'
+
+    def content(self):
+        return self.hcontent
+
+    content.short_description = '技能'
+
+    def book(self):
+        return self.hbook
+
+    book.short_description = '所属图书'
 
 
 """
