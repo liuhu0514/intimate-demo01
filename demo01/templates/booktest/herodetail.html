@@ -3,18 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>英雄详情</title>
+    <link rel="stylesheet" href="/static/css/main.css">
 </head>
 <body>
-    <h1>英雄详情</h1>
-    <h3>英雄名字：{{hero.hname}}</h3>
-    {% if hero.hgender %}
-        <h3>英雄性别：男</h3>
-    {% else %}
-        <h3>英雄性别：女</h3>
-    {% endif %}
-    <h3>英雄技能：{{hero.hcontent}}</h3>
-    <h3>所属图书：{{hero.hbook.btitle}}</h3>
-    {# <a href="/booktest/detail/{{hero.hbook.id}}">返回图书详情页</a> #}
-    <a href="{% url 'booktest:bookdetail' hero.hbook.id %}">返回图书详情页</a>
+    <div class="container">
+        <h1>英雄详情</h1>
+        <h3>英雄名字：{{hero.hname}}</h3>
+        {% if hero.hgender %}
+            <h3>英雄性别：男</h3>
+        {% else %}
+            <h3>英雄性别：女</h3>
+        {% endif %}
+        <h3>英雄技能：{{hero.hcontent}}</h3>
+        <h3>所属图书：{{hero.hbook.btitle}}</h3>
+        {# <a href="/booktest/detail/{{hero.hbook.id}}">返回图书详情页</a> #}
+        <a href="{% url 'booktest:bookdetail' hero.hbook.id %}">返回图书详情页</a>
+    </div>
 </body>
 </html>

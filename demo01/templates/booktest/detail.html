@@ -3,20 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <title>详情</title>
+    <link rel="stylesheet" href="/static/css/main.css">
 </head>
 <body>
-    <h2>{{book.btitle}}图书详情</h2>
-    <h3>书名:{{book.btitle}}</h3>
-    <h3>有以下英雄人物</h3>
-    <ul>
-        {% for hero in book.heroinfo_set.all %}
-            {# <li><a href="/booktest/herodetail/{{hero.id}}">{{hero.hname}}</a></li> #}
-            <li><a href="{% url 'booktest:herodetail' hero.id %}">{{hero.hname}}</a></li>
-        {% empty %}
-            <h3>该图书还没角色</h3>
-        {% endfor %}
-    </ul>
-    {# <a href="/booktest/list/">返回列表页</a> #}
-    <a href="{% url 'booktest:booklist' %}">返回列表页</a>
+    <div class="container">
+        <h2>{{book.btitle}}图书详情</h2>
+        <h3>书名:{{book.btitle}}</h3>
+        <h3>有以下英雄人物</h3>
+		<a href="{% url 'booktest:addhero' book.id %}">添加英雄</a>
+        <ul>
+            {% for hero in book.heroinfo_set.all %}
+                {# <li><a href="/booktest/herodetail/{{hero.id}}">{{hero.hname}}</a></li> #}
+                <li>
+                    <a href="{% url 'booktest:herodetail' hero.id %}">{{hero.hname}}</a>
+                    <a href="{% url 'booktest:edithero' hero.id %}">编辑</a>
+					<a href="{% url 'booktest:deletehero' hero.id %}">删除</a>
+                </li>
+            {% empty %}
+                <h3>该图书还没角色</h3>
+            {% endfor %}
+        </ul>
+        {# <a href="/booktest/list/">返回列表页</a> #}
+        <a href="{% url 'booktest:booklist' %}">返回列表页</a>
+    </div>
 </body>
 </html>
