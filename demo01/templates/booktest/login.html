@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    {% load static from staticfiles %}
+    {# <link rel="stylesheet" href="/static/css/main.css"> #}
+    <link rel="stylesheet" href="{% static '/css/main.css' %}">
+</head>
+<body>
+    <div class="container">
+        <p>请登录</p>
+        <ul>
+            <form action="{% url 'booktest:login' %}" method="post">
+                <li>
+                    用户名：<input type="text" name="username">
+                </li>
+                <li><input type="submit" value="登录"></li>
+            </form>
+        </ul>
+    </div>
+</body>
+</html>

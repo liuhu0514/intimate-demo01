@@ -1,4 +1,5 @@
 from django.db import models
+from django.db import connection
 
 # Create your models here.
 
@@ -60,6 +61,14 @@ class HeroInfo(models.Model):
         return self.hbook
 
     book.short_description = '所属图书'
+
+
+class Area(models.Model):
+    title = models.CharField(max_length=30)
+    parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
+
+    def __str__(self):
+        return self.title
 
 
 """

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>区域</title>
+</head>
+<body>
+    <p>当前地区{{area.title}}</p>
+    <p>上级地区：{{area.parent.title}}</p>
+    <ul>
+        {% for a in area.area_set.all %}
+        <li>{{a.title}}</li>
+        {% empty %}
+        <p>不存在</p>
+        {% endfor %}
+    </ul>
+</body>
+</html>

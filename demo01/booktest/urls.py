@@ -18,4 +18,7 @@ urlpatterns = [
     url(r'^edithero/(\d+)/$', views.edithero, name='edithero'),
     url(r'^editherohandle/(\d+)/$', views.editherohandle, name='editherohandle'),
     url(r'^deletehero/(\d+)/$', views.deletehero, name='deletehero'),
+    url(r'^area/$', views.area, name='area'),
+    url(r'^login/$', views.login, name='login'),
+    url(r'^logout/$', views.logout, name='logout'),
 ]

@@ -14,13 +14,14 @@
         <span>首页</span>
         {% if username %}
             <h3>{{username}}</h3>
+            {# <a href="/booktest/list/">进入列表页</a> #}
+            <a href="{% url 'booktest:booklist' %}">进入列表页</a>
+            <h3><a href="{% url 'booktest:logout' %}">退出登录</a></h3>
         {% else %}
-            <h3>还未登录</h3>
+        <a href="{% url 'booktest:login' %}">登录</a>
         {% endif %}
         <br>
 
-        {# <a href="/booktest/list/">进入列表页</a> #}
-        <a href="{% url 'booktest:booklist' %}">进入列表页</a>
     </div>
 </body>
 </html>

@@ -23,8 +23,10 @@ class HeroInfoAdmin(admin.ModelAdmin):
     list_per_page = 5
 
 
+from .models import Area
 admin.site.register(BookInfo, BookInfoAdmin)
 admin.site.register(HeroInfo, HeroInfoAdmin)
+admin.site.register(Area)
 
 """
 通过少量的代码实现强大的后台管理 

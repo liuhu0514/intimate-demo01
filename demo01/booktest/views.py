@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, reverse, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import HeroInfo, BookInfo
 from django.template import loader
@@ -12,7 +12,23 @@ def index(request):
     temp = loader.get_template('booktest/index.html')
     con = {'username': '希特勒'}
     temp = temp.render(con)
-    return HttpResponse(temp)
+    username = request.session.get('username')
+    print(username)
+    return render(request, 'booktest/index.html', {'username': username})
+
+
+def login(request):
+    if request.method == 'GET':
+        return render(request, 'booktest/login.html')
+    elif request.method == 'POST':
+        username = request.POST['username']
+        request.session['username'] = username
+        return redirect(reverse('booktest:index'))
+
+
+def logout(request):
+    request.session.clear()
+    return redirect(reverse('booktest:index'))
 
 
 def list(request):
@@ -20,8 +36,9 @@ def list(request):
     # temp = loader.get_template('booktest/list.html')
     con = {'booklist': bs}
     # result = temp.render(con)
-    return render(request, 'booktest/list.html', context=con)
+    # return render(request, 'booktest/list.html', context=con)
     # return HttpResponse(result)
+    return render(request, 'booktest/list.html', {'booklist': bs})
 
 
 def detail(request, bid):
@@ -50,8 +67,9 @@ def delete(request, bid):
     # temp = loader.get_template('booktest/list.html')
     con = {'booklist': bs}
     # result = temp.render(con)
-    return render(request, 'booktest/list.html', context=con)
+    # return render(request, 'booktest/list.html', context=con)
     # return HttpResponse(result)
+    return redirect(reverse('booktest:booklist'), {'booklist': bs})
 
 
 def addhero(request, bookid):
@@ -112,6 +130,14 @@ def deletehero(request, hid):
     book = hero.hbook
     hero.delete()
     return HttpResponseRedirect('/booktest/detail/'+str(book.id)+'/', {'book': book})
+
+
+from .models import Area
+
+
+def area(request):
+    a = Area.objects.get(title='郑州')
+    return render(request, 'booktest/area.html', {'area': a})
 
 
 """

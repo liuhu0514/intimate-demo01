@@ -24,8 +24,10 @@ SECRET_KEY = 'b+ca(_qu_5zj06!p^sg91m*8n_urdos+^v_7+_ex$12gwi5)_t'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+# DEBUG = False
 
 ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ['*', ]
 
 
 # Application definition
@@ -121,3 +123,14 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+# SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+# SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+# SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
+SESSION_ENGINE = 'redis_sessions.session'
+SESSION_REDIS_HOST = 'localhost'
+SESSION_REDIS_PORT = 6379
+SESSION_REDIS_DB = 0
+SESSION_REDIS_PASSWORD = ''
+SESSION_REDIS_PREFIX = 'session'
+
