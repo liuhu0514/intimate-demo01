@@ -24,8 +24,10 @@ SECRET_KEY = '@-h3-)poj5ch47i=m+uxk2iiup(8@os&pny671%_un+vn^aae_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+# DEBUG = False
 
 ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ['*', ]
 
 
 # Application definition
@@ -37,13 +39,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'booktest',
+]
+
+MIDDLEWARE_CLASSES = [
+    'django.contrib.sessions.middleware.SessionMiddleware',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -54,7 +61,7 @@ ROOT_URLCONF = 'demo04.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -103,9 +110,11 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+# LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-Hans'
 
 TIME_ZONE = 'UTC'
+# TIME_ZONE = ''
 
 USE_I18N = True
 
@@ -118,3 +127,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+# SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+# SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+# SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
+SESSION_ENGINE = 'redis_sessions.session'
+SESSION_REDIS_HOST = 'localhost'
+SESSION_REDIS_PORT = 6379
+SESSION_REDIS_DB = 5
+SESSION_REDIS_PASSWORD = ''
+SESSION_REDIS_PREFIX = 'session'

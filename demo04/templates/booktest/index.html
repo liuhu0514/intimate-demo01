@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    {% load static from staticfiles %}
+    {# <link rel="stylesheet" href="/static/css/main.css"> #}
+    <link rel="stylesheet" href="{% static '/css/main.css' %}">
+</head>
+<body>
+    <div class="container">
+        {# <img src="/static/images/bord.jpg" alt="头像加载失败"> #}
+        <img src="{% static '/images/bord.jpg' %}" alt="头像加载失败">
+        <span>首页</span>
+        {% if username %}
+            <h3>{{username}}</h3>
+            {# <a href="/booktest/list/">进入列表页</a> #}
+            <a href="{% url 'booktest:booklist' %}">进入列表页</a>
+            <h3><a href="{% url 'booktest:logout' %}">退出登录</a></h3>
+        {% else %}
+        <a href="{% url 'booktest:login' %}">登录</a>
+        {% endif %}
+        <br>
+
+    </div>
+</body>
+</html>

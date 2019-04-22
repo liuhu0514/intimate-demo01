@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加图书</title>
+</head>
+<body>
+    <div class="container">
+        <form action="{% url 'booktest:addhandle' %}" method="post">
+        	请输入书名：<input type="text" name="btitle" required />
+        	<input type="submit" value="添加"/>
+        </form>
+		<a href="{% url 'booktest:booklist' %}">返回列表</a>
+    </div>
+</body>
+</html>
