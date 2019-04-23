@@ -1,0 +1,26 @@
+div.header{
+    height: 100px;
+    background-color: aqua;
+}
+div.content{
+    background-color: blue;
+    width: 1100px;
+    height: 1500px;
+    margin: 0 auto;
+}
+div.left{
+    float: left;
+    width: 30%;
+    height: 1500px;
+    background-color: blueviolet;
+}
+div.right{
+    float: right;
+    width: 70%;
+    height: 1500px;
+    background-color: crimson;
+}
+div.footer{
+    height: 100px;
+    background-color: aqua;
+}
