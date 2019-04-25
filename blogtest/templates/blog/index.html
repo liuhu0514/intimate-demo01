@@ -1,0 +1,68 @@
+{% extends 'blog/base.html' %}
+{% load extend_fun %}
+{% block title %}
+    首页
+{% endblock %}
+{% block left %}
+    {% for a in articles %}
+        <article class="post post-1">
+            <header class="entry-header">
+                <h1 class="entry-title">
+                    <a href="{% url 'blog:detailadd' a.id %}">{{a.title}}</a>
+                </h1>
+                <div class="entry-meta">
+                    <span class="post-category"><a href="#">{{a.cls}}</a></span>
+                    <span class="post-date"><a href="#"><time class="entry-date"
+                                                              datetime="2012-11-09T23:15:57+00:00">{{a.add_time}}</time></a></span>
+                    <span class="post-author"><a href="#">{{a.author}}</a></span>
+                    <span class="comments-link"><a href="#">5 评论</a></span>
+                    <span class="views-count"><a href="#">{{a.num}} 阅读</a></span>
+                </div>
+            </header>
+            <div class="entry-content clearfix">
+                <p>{{a.major|safe|truncatechars:100}}...</p>
+                <div class="read-more cl-effect-14">
+                    <a href="#" class="more-link">继续阅读 <span class="meta-nav">→</span></a>
+                </div>
+            </div>
+        </article>
+    {% empty %}
+        <p>暂无文章</p>
+    {% endfor %}
+		
+    
+{% endblock left %}
+{% block paging %}
+	<div class="pagination">
+		<ul>
+			<li>
+				{% if articles.has_previous %}
+					<a href="?page={{articles.previous_page_number}}">&laquo;</a>
+				{% endif %}
+				{% if not articles.has_previous %}
+					<a href="">&laquo;</a>
+				{% endif %}
+			</li>
+			{% for i in articles.paginator.page_range %}
+				<li>
+					<a href="?page={{i}}">
+						{{i}}
+					</a>
+				</li>
+			{% endfor %}
+			<li>
+				{% if articles.has_next %}
+					<a href="?page={{articles.next_page_number}}">&raquo;</a>
+				{% endif %}
+				{% if not articles.has_next %}
+					<a href="">&raquo;</a>
+				{% endif %}
+			</li>
+			<li>
+				共{{articles.paginator.num_pages}}页
+			</li>
+		</ul>
+	</div>
+
+{% endblock paging %}
+
