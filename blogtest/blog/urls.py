@@ -8,4 +8,5 @@ urlpatterns = [
     url(r'^cls/(\d+)/$', views.cls, name='cls'),
     url(r'^label/(\d+)/$', views.label, name='label'),
     url(r'^file/(\d+)/(\d+)/$', views.file, name='file'),
+    url(r'^author/(\d+)/$', views.author, name='author'),
 ]

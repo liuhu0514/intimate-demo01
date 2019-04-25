@@ -1,7 +1,7 @@
 {% extends 'blog/base.html' %}
 {% load extend_fun %}
 {% block title %}
-    首页
+    文章列表
 {% endblock %}
 {% block left %}
     {% for a in articles %}
@@ -11,18 +11,18 @@
                     <a href="{% url 'blog:detailadd' a.id %}">{{a.title}}</a>
                 </h1>
                 <div class="entry-meta">
-                    <span class="post-category"><a href="#">{{a.cls}}</a></span>
-                    <span class="post-date"><a href="#"><time class="entry-date"
+                    <span class="post-category"><a href="{% url 'blog:cls' a.cls.id %}">{{a.cls.name}}</a></span>
+                    <span class="post-date"><a href="{% url 'blog:file' a.add_time.year a.add_time.month %}"><time class="entry-date"
                                                               datetime="2012-11-09T23:15:57+00:00">{{a.add_time}}</time></a></span>
-                    <span class="post-author"><a href="#">{{a.author}}</a></span>
-                    <span class="comments-link"><a href="#">5 评论</a></span>
-                    <span class="views-count"><a href="#">{{a.num}} 阅读</a></span>
+                    <span class="post-author"><a href="{% url 'blog:author' a.author.id %}">{{a.author.username}}</a></span>
+                    <span class="comments-link"><a href="{% url 'blog:detailadd' a.id %}">{{a.comment_set.count}} 评论</a></span>
+                    <span class="views-count"><a href="{% url 'blog:detailadd' a.id %}">{{a.num}} 阅读</a></span>
                 </div>
             </header>
             <div class="entry-content clearfix">
-                <p>{{a.major|safe|truncatechars:100}}...</p>
+                <p><a href="{% url 'blog:detailadd' a.id %}">{{a.major|safe|truncatechars:100}}...</a></p>
                 <div class="read-more cl-effect-14">
-                    <a href="#" class="more-link">继续阅读 <span class="meta-nav">→</span></a>
+                    <a href="{% url 'blog:detailadd' a.id %}" class="more-link">继续阅读 <span class="meta-nav">→</span></a>
                 </div>
             </div>
         </article>

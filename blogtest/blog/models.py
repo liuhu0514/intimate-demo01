@@ -55,6 +55,10 @@ class Article(models.Model):
     def __str__(self):
         return self.title
 
+    # def increseview(self):
+    #     self.views += 1
+    #     self.save()
+
     def a_title(self):
         return self.title
     a_title.short_description = '文章题目'

@@ -1,7 +1,8 @@
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, redirect, reverse, get_object_or_404
 from .models import User, Classify, Label, Article
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from comment.forms import CommentForm
+import markdown
 
 # Create your views here.
 
@@ -41,7 +42,14 @@ def detailadd(request, aid):
 
 def detail(request, aid):
     if request.method == 'GET':
-        a = Article.objects.get(pk=aid)
+        a = get_object_or_404(Article, pk=aid)
+        md = markdown.Markdown(extensions=[
+            'markdown.extensions.extra',
+            'markdown.extensions.codehilite',
+            'markdown.extensions.toc'
+        ])
+        a.content = md.convert(a.content)
+        a.toc = md.toc
         form = CommentForm()
         return render(request, 'blog/single.html', {'a': a, 'form': form})
 
@@ -63,5 +71,12 @@ def label(request, lid):
 
 def file(request, y, m):
     articles = Article.objects.filter(add_time__year=y).filter(add_time__month=m).order_by('-add_time')
+    articles = paging(request, articles)
+    return render(request, 'blog/index.html', {'articles': articles})
+
+
+def author(request, author_id):
+    u = User.objects.get(pk=author_id)
+    articles = u.article_set.order_by('-add_time')
     articles = paging(request, articles)
     return render(request, 'blog/index.html', {'articles': articles})
