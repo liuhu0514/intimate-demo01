@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %} 文章信息 {% endblock %}
+
+{% block src %}
+    <script src="/static/tiny_mce/tiny_mce.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+        tinyMCE.init({
+           'mode': 'textareas'r,
+           'theme':'advanced',
+           'width': 680,
+           'height': 300,
+        });
+    </script>
+{% endblock %}
+
+{% block link %}
+	<a href="{% url 'books:edit' %}"> 返回  </a>  |
+	
+	<a href="{% url 'manager:edelete' e.id %}">删除</a>|
+{% endblock %}
+{% block body  %}
+	<h2> 文章信息 </h2>
+	{% if error %}
+	<div class=error>
+	  <strong>Errror : </strong> {{error}}
+	</div>
+	{% endif %}
+	{% if e %}
+	<li> 文章名 {{e.title}} </li>
+	<li> 文章内容 {{e.content|safe}} </li>
+	<form action="{% url 'manager:einfo' e.id %}" method="post">
+		{% csrf_token %}
+		文章名：<input type="text" value="{{e.title}}" name="title" required="required"/>
+		<br>
+		文章内容：
+        <br>
+		<textarea name="content" cols="50" rows="10">
+            {{e.content|safe}}
+        </textarea>
+        <br>
+		<input type="submit" value="修改"/>
+	</form>
+
+	{% endif %}
+
+{% endblock %}

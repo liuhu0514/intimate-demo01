@@ -8,7 +8,7 @@ class StuUser(User):
     # 学院
     college = models.CharField(max_length=30, blank=True, null=True)
     # 学号
-    sno = models.IntegerField(max_length=16, blank=True, null=True, unique=True)
+    sno = models.IntegerField(blank=True, null=True, unique=True)
 
     def __str__(self):
         return self.username
@@ -67,3 +67,12 @@ class History(models.Model):
 
     def __str__(self):
         return self.book
+
+
+class HotPic(models.Model):
+    name = models.CharField(max_length=20)
+    pic = models.ImageField(upload_to='hotpic')
+    index = models.IntegerField(unique=True, default=1)
+
+    def __str__(self):
+        return self.name

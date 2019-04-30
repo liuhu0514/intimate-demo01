@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %} 热点图片 {% endblock %}
+
+{% block link %}
+	<a href="{% url 'manager:upload' %}"> 返回  </a>  |
+	
+	<a href="{% url 'manager:hot_delete' hot.id %}">删除</a>|
+{% endblock %}
+{% block body  %}
+	<h2> 图片信息 </h2>
+	{% if error %}
+	<div class=error>
+	  <strong>Errror : </strong> {{error}}
+	</div>
+	{% endif %}
+	{% if hot %}
+	<li> 图片名 {{hot.name}} </li>
+	<li> 图片索引 {{hot.index}} </li>
+	<form action="{% url 'manager:hotinfo' hot.id %}" method="post">
+		{% csrf_token %}
+		图片名：<input type="text" value="{{hot.name}}" name="name" required="required"/>
+		<br>
+		图片索引：<input type="text" value="{{hot.index}}" name="index" required/>
+		<input type="submit" value="修改"/>
+	</form>
+    <div class="content">
+        <img src="/static/media/{{hot.pic.url}}" alt="图片加载失败" style="width: 680px;">
+    </div>
+
+	{% endif %}
+
+{% endblock %}

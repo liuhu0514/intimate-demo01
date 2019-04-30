@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}发送邮件{% endblock %}
+
+{% comment %}
+{% block src %}
+    <script src="/static/tiny_mce/tiny_mce.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+        tinyMCE.init({
+           'mode': 'textareas',
+           'theme':'advanced',
+           'width': 680,
+           'height': 300,
+        });
+    </script>
+{% endblock %}
+{% endcomment %}
+
+{% block link %}
+  <a href="{% url 'books:index' %}">返回首页</a>
+{% endblock %}
+
+{% block body %}
+    <h3>发送邮件</h3>
+    <form action="{% url 'books:mail' %}" method="post">
+        {% csrf_token %}
+        收件人：<input type="email" name="recipient">
+        <br>
+        标题：<input type="text" name="title">
+        <br>
+        邮件内容
+        <br>
+        <textarea name="message"></textarea>
+        <br>
+        <input type="submit" value="提交">
+    </form>
+    <br>
+    <a href="{% url 'books:index' %}">返回首页</a>
+
+{% endblock %}

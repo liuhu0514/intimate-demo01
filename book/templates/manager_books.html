@@ -1,9 +1,9 @@
-{% extends 'layout.html' %}
+{% extends 'base.html' %}
 {% block title%} 图书管理 {% endblock %}
 {% block link%} 
-	<a href="{{ url_for('manager')}}"> 返回 </a> | 
-	<a href="{{ url_for('manager_books_add') }}"> 添加 </a> |
-	<a href="{{ url_for('manager_books_delete') }}"> 删除 </a> 
+	<a href="{% url 'manager:index' %}"> 返回 </a> | 
+	<a href="{% url 'manager:addbook' %}"> 添加 </a> |
+	<a href="{% url 'manager:deletebook' %}"> 删除 </a> 
 {%  endblock%}
 {% block body%}
 	<h2> 图书管理 </h2>
@@ -18,12 +18,12 @@
 	  </tr>
 	  {% for book in books%}
 	  <tr>
-	    <th align="center"> {{book.book_id}}</th>
-	    <th align="center"> {{book.book_name}} </th>
+	    <th align="center"> {{book.isbn}}</th>
+	    <th align="center"> {{book.title}} </th>
 	    <th align="center"> {{book.author}}</th>
-	    <th align="centet"> {{book.publish_com}} </th>
-	    <th align="center"> {{book.publish_date}}</th>
-	    <th align="center"> <a href="{{ url_for('manager_book', id=book.book_id)}}"> 点击进入 </a> </th>
+	    <th align="centet"> {{book.press}} </th>
+	    <th align="center"> {{book.pub_time}}</th>
+	    <th align="center"> <a href="{% url 'manager:bookdetail' book.id %}"> 点击进入 </a> </th>
 	  </tr>
 	  {% endfor %}
 	</table>

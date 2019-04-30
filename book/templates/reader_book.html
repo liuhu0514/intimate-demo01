@@ -1,9 +1,9 @@
-{% extends 'layout.html' %}
+{% extends 'base.html' %}
 
 {% block title %} 书目信息 {% endblock %}
 {% block link %} 
 	{% if book %}
-	<a href="{{ url_for('reader')}}"> 返回 </a>
+	<a href="{% url 'books:query' %}"> 返回 </a>
 	{% endif %}
 {% endblock %}
 
@@ -15,25 +15,26 @@
 	{% endif %}
 	<h2> 书目信息 </h2>
 	{% if book %}
-	<li> ISBN            	{{book.book_id}} </li>
-	<li> 书名        		{{book.book_name}} </li>
+	<li> ISBN            	{{book.isbn}} </li>
+	<li> 书名        		{{book.title}} </li>
 	<li> 作者        		{{book.author}} </li>	
-	<li> 出版社     	{{book.publish_com}} </li>
-	<li> 出版日期   	{{book.publish_date}} </li>
+	<li> 出版社     	{{book.press}} </li>
+	<li> 出版日期   	{{book.pub_time}} </li>
 	{% endif %}
 	<div >
 	  <h2 > 借阅信息 </h2>
 	  {% if reader  %}
-	  <li> 借阅者姓名 {{reader.user_name}}</li>
-	  <li> 借阅日期  {{reader.date_borrow}}</li>
-	  <li> 还书日期  {{reader.date_return}}</li>
+	  <li> 借阅者姓名 {{reader.username}}</li>
+	  <li> 借阅日期  {{his.bor_time}}</li>
+	  <li> 还书日期  {{his.re_time}}</li>
 	  {% else %}
 	  <li> 无 </li>
+		<form action="{% url 'books:bookdetail' book.id %}" method=post>
+			{% csrf_token %}
+		  <div class=actions>
+		    <input type=submit value="借阅">
+		  </div>
+		</form>
 	  {% endif %}
-	  <form action="" method=post>
-	    <div class=actions>
-	      <input type=submit value="借阅">
-	    </div>
-	  </form>
 
 {% endblock %}

@@ -1,10 +1,61 @@
-{% extends "layout.html" %}
+{% extends "base.html" %}
+{% load extend_fun %}
+
 {% block title %}主页{% endblock %}
 {% block link %}
-  <a href="{{ url_for('manager_login')}}">管理员登录 </a>|
-  <a href="{{ url_for('reader_login')}}">读者登录 </a>
+  <a href="{% url 'manager:manager_login' %}">管理员登录 </a>|
+  <a href="{% url 'books:user_login' %}">读者登录 </a> |
+  <a href="{% url 'books:mail' %}">发送邮件</a>
 {% endblock %}
 
 {% block body %}
   <h2>欢迎使用</h2>
+
+    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+      <!-- Indicators -->
+      {% get_hot as hots %}
+      <ol class="carousel-indicators">
+          {% for i in hots %}
+              {% if forloop.counter == 1 %}
+                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+              {% else %}
+                <li data-target="#carousel-example-generic" data-slide-to="{{forloop.counter}}"></li>
+              {% endif %}
+          {% endfor %}
+
+      </ol>
+
+      <!-- Wrapper for slides -->
+      <div class="carousel-inner" role="listbox">
+        {% for i in hots %}
+          {% if forloop.counter == 1 %}
+            <div class="item active">
+          {% else %}
+            <div class="item">
+          {% endif %}
+              <img src="/static/media/{{i.pic.url}}" alt="图片加载失败">
+			</div>
+        {% empty %}
+          <div>无图片</div>
+        {% endfor %}
+      </div>
+
+      <!-- Controls -->
+      <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+    <div class="art">
+        {% get_art as arts %}
+        {% for i in arts %}
+            {{i.title|safe}}
+            {{i.content|safe}}
+        {% endfor %}
+
+    </div>
 {% endblock %}

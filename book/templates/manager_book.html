@@ -1,27 +1,28 @@
-{% extends "layout.html" %}
+{% extends "base.html" %}
 {% block title %} 图书主页 {% endblock %}
 
 {% block link %}
-	<a href="{{ url_for('manager_books') }}"> 返回  </a> | 
+	<a href="{% url 'manager:book_manage' %}"> 返回  </a> | 
 	{% if book %}
-	<a href="{{ url_for('manager_modify', id=book.book_id)}}"> 修改 </a>
+	<a href="{% url 'manager:book_modify' book.id %}"> 修改 </a>
 	{% endif%}
 {% endblock %}
 {% block body  %}
 	<h2> 图书信息 </h2>
 	{% if book %}
-	<li> ISBN            	{{book.book_id}} </li>
-	<li> 书名        		{{book.book_name}} </li>
+	<li> ISBN            	{{book.isbn}} </li>
+	<li> 书名        		{{book.title}} </li>
 	<li> 作者        		{{book.author}} </li>	
-	<li> 出版社     	{{book.publish_com}} </li>
-	<li> 出版日期   	{{book.publish_date}} </li>
+	<li> 出版社     	{{book.press}} </li>
+	<li> 出版日期   	{{book.pub_time}} </li>
 	{% endif %}
 	<h2 > 借阅信息 </h2>
-	{% if reader  %}
-	<li> 借阅者姓名 {{reader.user_name}}</li>
-	<li> 借阅日期  {{reader.date_borrow}}</li>
-	<li> 还书日期  {{reader.date_return}}</li>
-	<form action="" method=post>
+	{% if his  %}
+	<li> 借阅者姓名 {{his.user.username}}</li>
+	<li> 借阅日期  {{his.bor_time}}</li>
+	<li> 还书日期  {{his.re_time}}</li>
+	<form action="{% url 'manager:bookdetail' book.id %}" method=post>
+		{% csrf_token %}
 	  <div class=actions>
 	    <input type=submit value="归还">
 	    </div>

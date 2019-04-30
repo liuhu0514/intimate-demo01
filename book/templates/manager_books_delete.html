@@ -1,7 +1,7 @@
-{% extends "layout.html" %}
+{% extends "base.html" %}
 {% block title %} 删除书目 {% endblock %}
 {% block link %}
-	<a href="{{ url_for('manager_books')}}"> 返回 </a>
+	<a href="{% url 'manager:book_manage' %}"> 返回 </a>
 {% endblock %}
 
 {% block body %}
@@ -11,7 +11,8 @@
 	  <strong>Errror : </strong> {{error}}
 	</div>
 	{% endif %}  
-	<form action="" method=post>
+	<form action="{% url 'manager:deletebook' %}" method=post>
+		{% csrf_token %}
 	  <dl>
 	    <dt>请输入书目ISBN:</dt>
 	    <dd><input type=text name=id size=30> </dd>	

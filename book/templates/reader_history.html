@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %} 阅读记录 {% endblock %}
+{% block link %} 
+	<a href="{% url 'books:reader' %}"> 返回 </a>
+{% endblock %}
+{% block body %}
+	<table width="600" border="1" align="center">
+	  <tr>
+	    <th align="center"> 书名 </th>
+	    <th align="center"> 借书日期 </th>	
+	    <th align="center"> 还书日期 </th>
+	    <th align="center"> 状态 </th>
+	  </tr>
+	  {% for histroy in historys %}
+	  <tr>
+	    <th align="center"> {{histroy.book.title}} </th>
+	    <th align="center"> {{histroy.bor_time}}</th>
+	    <th align="center"> {{histroy.re_time}} </th> 
+			{% if histroy.is_re %}
+	    <th align="center"> 已归还 </th>
+			{% else %}
+			<th align="center"> 未归还 </th>
+			{% endif %}
+	  </tr>
+	  {% endfor %}
+	</table>	
+
+{% endblock %}

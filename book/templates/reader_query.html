@@ -1,7 +1,7 @@
-{% extends "layout.html" %}
+{% extends "base.html" %}
 {% block title%} 查询  {% endblock %}
 {% block link %} 
-	<a href="{{ url_for('reader') }}"> 返回 </a>
+	<a href="{% url 'books:reader' %}"> 返回 </a>
 {% endblock %}
 {% block body %}
 	<h2> 查询 </h2> 
@@ -11,11 +11,12 @@
 	</div>
 	{% endif %}  
     <div class=actions>
-	  <form action="" method="post">
+	  <form action="{% url 'books:query' %}" method="post">
+			{% csrf_token %}
 	    <dd>
 	      <select name="item">
-		<option value="name"> 书名 </option>
-		<option value="author"> 作者 </option>
+					<option value="name"> 书名 </option>
+					<option value="author"> 作者 </option>
 	      </select>
 	      <input type="text" name="query" size="80"> 
 	      <input type="submit" value="查询">
@@ -34,12 +35,12 @@
 	  </tr>
 	  {% for book in books %}
 	  <tr>
-	    <th align="center"> {{book.book_id}}</th>
-	    <th align="center"> {{book.book_name}} </th>
+	    <th align="center"> {{book.isbn}}</th>
+	    <th align="center"> {{book.title}} </th>
 	    <th align="center"> {{book.author}}</th>
-	    <th align="center"> {{book.publish_com}} </th>
-	    <th align="center"> {{book.publish_date}}</th>
-	    <th align="center"> <a href="{{ url_for('reader_book', id=book.book_id)}}"> 点击进入 </a> </th>
+	    <th align="center"> {{book.press}} </th>
+	    <th align="center"> {{book.pub_time}}</th>
+	    <th align="center"> <a href="{% url 'books:bookdetail' book.id %}"> 点击进入 </a> </th>
 	  </tr>
 	  {% endfor %}
 	  {% endif %}

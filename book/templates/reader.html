@@ -1,10 +1,10 @@
-{% extends 'layout.html' %}
+{% extends 'base.html' %}
 {% block title %} 欢迎使用 {% endblock %}
 {% block link %} 
-	<a href="{{url_for('logout')}}"> 注销[{{g.user}}] </a> | 
-	<a href="{{url_for('reader_query')}}"> 查询 </a> | 
-	<a href="{{url_for('reader_info')}}"> 查看个人信息 </a> |
-	<a href="{{url_for('reader_histroy')}}"> 查看阅读记录 </a>
+	<a href="{% url 'books:logout' %}"> 注销[{{user.username}}] </a> |
+	<a href="{% url 'books:query' %}"> 查询 </a> | 
+	<a href="{% url 'books:userinfo' %}"> 查看个人信息 </a> |
+	<a href="{% url 'books:history' %}"> 查看阅读记录 </a>
 
 {% endblock %}
 

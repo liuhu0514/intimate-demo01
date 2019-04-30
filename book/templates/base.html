@@ -1,0 +1,22 @@
+{% load extend_fun %}
+<!doctype html>
+<title> {% block title %} 图书管理系统 {% endblock %} </title>
+<link rel=stylesheet type=text/css href="/static/style.css">
+<link rel="stylesheet" type="text/css" href="/static/bootstrap-3.3.7-dist/css/bootstrap.css"/>
+<script src="/static/bootstrap-3.3.7-dist/js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/bootstrap-3.3.7-dist/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+{% block src %}
+{% endblock %}
+<div class=page>
+  <h1>图书管理系统</h1>
+  <div class=navigation>
+    {% block link %}{% endblock %}
+  </div>
+  <div class=body>
+    {% block body %}{% endblock %}
+   </div>
+  <div class=footer>
+     &mdash; 奇酷学院
+  </div>
+</div>
+    

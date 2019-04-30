@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}图片上传{% endblock %}
+
+
+{% block src %}
+    <script src="/static/tiny_mce/tiny_mce.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+        tinyMCE.init({
+           'mode': 'textareas',
+           'theme':'advanced',
+           'width': 680,
+           'height': 300,
+        });
+    </script>
+{% endblock %}
+
+
+{% block link %}
+  <a href="{% url 'manager:index' %}">返回首页</a>
+{% endblock %}
+
+
+{% block body %}
+    <h3>上传图片</h3>
+    <form action="{% url 'manager:upload' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        图片名：<input type="text" name="name">
+        <br>
+        选择图片：<input type="file" name="tu">
+        <br>
+        索引：<input type="text" name="index">
+        <br>
+        <input type="submit" value="上传">
+    </form>
+    <br>
+    <table width="600" border="1", align="center">
+      <tr>
+        <th align="center"> 图片id </th>
+        <th align="center"> 图片名 </th>
+        <th align="center"> 图片编号</th>
+		<th align="center"> 操作</th>
+      </tr>
+      {% for hot in hots%}
+      <tr>
+        <th align="center"> {{hot.id}}</th>
+        <th align="center"> {{hot.name}} </th>
+        <th align="center"> {{hot.index}}</th>
+        <th align="center"> <a href="{% url 'manager:hotinfo' hot.id %}"> 点击进入 </a> </th>
+      </tr>
+      {% endfor %}
+    </table>
+
+{% endblock %}

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import StuUser, BookInfo, History
+from .models import StuUser, BookInfo, History, HotPic
 
 # Register your models here.
 
@@ -19,3 +19,4 @@ class HisAdmin(admin.ModelAdmin):
 admin.site.register(StuUser, StuUserAdmin)
 admin.site.register(BookInfo, BookAdmin)
 admin.site.register(History, HisAdmin)
+admin.site.register(HotPic)

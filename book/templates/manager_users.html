@@ -1,7 +1,7 @@
-{% extends 'layout.html' %}
+{% extends 'base.html' %}
 {% block title%} 用户管理 {% endblock %}
 {% block link%} 
-	<a href="{{ url_for('manager')}}"> 返回 </a> 
+	<a href="{% url 'manager:index' %}"> 返回 </a> 
 {%  endblock%}
 {% block body%}
 	<h2> 用户管理 </h2>
@@ -12,8 +12,8 @@
 	  </tr>
 	  {% for user in users%}
 	  <tr>
-	    <th align="center"> {{user.user_name}}</th>
-	    <th align="center"> <a href="{{ url_for('manager_user', id=user.user_id)}}"> 点击进入 </a> </th>
+	    <th align="center"> {{user.username}}</th>
+	    <th align="center"> <a href="{% url 'manager:userdetail' user.id %}"> 点击进入 </a> </th>
 	  </tr>
 	  {% endfor %}
 	</table>

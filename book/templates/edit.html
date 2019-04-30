@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}编辑页面{% endblock %}
+
+
+{% block src %}
+    <script src="/static/tiny_mce/tiny_mce.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+        tinyMCE.init({
+           'mode': 'textareas',
+           'theme':'advanced',
+           'width': 680,
+           'height': 300,
+        });
+    </script>
+{% endblock %}
+
+{% block link %}
+  <a href="{% url 'manager:index' %}">返回</a>
+{% endblock %}
+
+
+{% block body %}
+    <h3>编辑页面</h3>
+    <form action="{% url 'books:edit' %}" method="post">
+        {% csrf_token %}
+        标题：<input type="text" name="title">
+        <br>
+        message:
+        <br>
+        <textarea name="message"></textarea>
+        <br>
+        <input type="submit" value="提交">
+    </form>
+
+    <br>
+	<table width="600" border="1", align="center">
+	  <tr>
+	    <th align="center"> 文章标题 </th>
+		<th align="center"> 操作</th>
+	  </tr>
+	  {% for e in es%}
+	  <tr>
+	    <th align="center"> {{e.title}}</th>
+	    <th align="center"> <a href="{% url 'manager:einfo' e.id %}"> 点击进入 </a> </th>
+	  </tr>
+	  {% endfor %}
+	</table>
+
+{% endblock %}
