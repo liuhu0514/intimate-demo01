@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ajax请求</title>
+    <script src="/static/bootstrap-3.3.7-dist/js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+            $(function () {
+                $('#load').click(function () {
+                    $.ajax({
+                        url:'/books/ajaxload/',
+                        type:'post',
+                        data:{'csrfmiddlewaretoken':$('input[name=csrfmiddlewaretoken]').val()},
+                        success:function (date) {
+                            console.log(date);
+                            $('div#info').load('/static/data/date');
+
+                        }
+                    })
+                })
+            })
+
+    </script>
+
+</head>
+<body>
+{% csrf_token %}
+<button id="load">ajax请求</button>
+<div id="info"></div>
+<div id="info1"></div>
+
+</body>
+</html>

@@ -8,7 +8,7 @@ import markdown
 
 
 def paging(request, articles):
-    paginnator = Paginator(articles, 3)
+    paginnator = Paginator(articles, 2)
     page = request.GET.get('page')
     try:
         articles = paginnator.page(page)
@@ -43,10 +43,19 @@ def detailadd(request, aid):
 def detail(request, aid):
     if request.method == 'GET':
         a = get_object_or_404(Article, pk=aid)
+        # 第一种markdown方法
+        # a.increseview()
+        # a.content = markdown.markdown(a.content, extensions=[
+        #     'markdown.extensions.extra',
+        #     'markdown.extensions.codehilite',
+        #     'markdown.extensions.toc',
+        # ])
+
+        # 第二种markdown方法
         md = markdown.Markdown(extensions=[
             'markdown.extensions.extra',
             'markdown.extensions.codehilite',
-            'markdown.extensions.toc'
+            'markdown.extensions.toc',
         ])
         a.content = md.convert(a.content)
         a.toc = md.toc

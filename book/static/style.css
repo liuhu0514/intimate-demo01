@@ -176,4 +176,7 @@ div.error {
     padding: 4px;
     font-size: 13px;
 }
-.login_form {text-align:text}
+li{
+    list-style: none;
+}
+

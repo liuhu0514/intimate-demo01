@@ -1,11 +1,13 @@
 {% extends "base.html" %}
 {% load extend_fun %}
+{% load cache %}
 
 {% block title %}主页{% endblock %}
 {% block link %}
   <a href="{% url 'manager:manager_login' %}">管理员登录 </a>|
   <a href="{% url 'books:user_login' %}">读者登录 </a> |
   <a href="{% url 'books:mail' %}">发送邮件</a>
+  <a href="{% url 'books:ajax' %}">请求</a>
 {% endblock %}
 
 {% block body %}
@@ -13,6 +15,7 @@
 
     <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
       <!-- Indicators -->
+      {% cache 300 hots %}
       {% get_hot as hots %}
       <ol class="carousel-indicators">
           {% for i in hots %}
@@ -27,6 +30,7 @@
 
       <!-- Wrapper for slides -->
       <div class="carousel-inner" role="listbox">
+
         {% for i in hots %}
           {% if forloop.counter == 1 %}
             <div class="item active">
@@ -38,6 +42,7 @@
         {% empty %}
           <div>无图片</div>
         {% endfor %}
+        {% endcache %}
       </div>
 
       <!-- Controls -->

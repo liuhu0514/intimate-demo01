@@ -38,25 +38,33 @@
 				<div class="col-md-4">
 					<label for="id_name">名字：</label>
 					{{form.name}}
+
 					{# <input type="text" id="id_name" name="name" required> #}
+
 				</div>
 				<div class="col-md-4">
 					<label for="id_email">邮箱：</label>
 					{{form.email}}
+
 					{% comment %}
 					<input type="email" id="id_email" name="email" required>
 					<input type="hidden" name="arid" value="{{ar.id}}" />
 					{% endcomment %}
+
 				</div>
 				<div class="col-md-4">
 					<label for="id_url">网址：</label>
 					{{form.url}}
+
 					{# <input type="text" id="id_url" name="url"> #}
+
 				</div>
 				<div class="col-md-12">
 					<label for="id_comment">评论：</label>
 					{{form.content}}
+
 					{# <textarea name="comment" id="id_comment" required></textarea> #}
+
 					<button type="submit" class="comment-btn">发表</button>
 				</div>
 			</div>
@@ -72,6 +80,7 @@
 							{{c.content}}
 						</div>
 					</li>
+
 				{% empty %}
 					<li>暂时还无评论，赶快去发表你的高见把</li>
 				{% endfor %}
@@ -80,6 +89,7 @@
 		</div>
 	</section>
 {% endblock %}
+
 {% block catalog %}
 	{{a.toc|safe}}
 {% endblock %}

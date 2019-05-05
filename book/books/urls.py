@@ -16,5 +16,9 @@ urlpatterns = [
     url(r'^bookdetail/(\d+)/$', views.bookdetail, name='bookdetail'),
     url(r'^edit/$', views.edit, name='edit'),
     url(r'^mail/$', views.mail, name='mail'),
-    url(r'^active/(\d+)/$', views.active, name='active'),
+    url(r'^active/(.*?)/$', views.active, name='active'),
+    url(r'^ajax$', views.ajax, name='ajax'),
+    url(r'^ajaxload/$', views.ajaxload, name='ajaxload'),
+    url(r'^verify/$', views.verify, name='verify'),
+    url(r'option/', views.option, name='option'),
 ]

@@ -9,9 +9,9 @@ from django.template import loader
 def index(request):
     # return HttpResponse('首页')
     # 加载模板
-    temp = loader.get_template('booktest/index.html')
-    con = {'username': '希特勒'}
-    temp = temp.render(con)
+    # temp = loader.get_template('booktest/index.html')
+    # con = {'username': '希特勒'}
+    # temp = temp.render(con)
     username = request.session.get('username')
     print(username)
     return render(request, 'booktest/index.html', {'username': username})
@@ -65,7 +65,7 @@ def delete(request, bid):
     BookInfo.objects.get(pk=bid).delete()
     bs = BookInfo.objects.all()
     # temp = loader.get_template('booktest/list.html')
-    con = {'booklist': bs}
+    # con = {'booklist': bs}
     # result = temp.render(con)
     # return render(request, 'booktest/list.html', context=con)
     # return HttpResponse(result)

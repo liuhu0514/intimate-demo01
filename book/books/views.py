@@ -5,6 +5,12 @@ from datetime import datetime, timedelta
 from manager.models import Article
 from django.core.mail import send_mail, send_mass_mail
 from django.conf import settings
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer, SignatureExpired, JSONWebSignatureSerializer
+from PIL import Image, ImageDraw, ImageFont
+import random
+import io
+from django.views.decorators.cache import cache_page
+
 # Create your views here.
 
 
@@ -14,6 +20,7 @@ def get_user(request):
     return user
 
 
+# @cache_page(60*5)
 def index(request):
     return render(request, 'index.html')
 
@@ -42,19 +49,68 @@ def user_login(request):
     elif request.method == 'POST':
         username = request.POST['username']
         pwd = request.POST['password']
-        users = StuUser.objects.all()
-        for user in users:
-            if user.username == username and pwd == user.password:
-                if user.is_active:
-                    request.session['uid'] = user.id
-                    return redirect(reverse('books:reader'))
-                else:
-                    error = '您的账户未激活，赶紧去激活登录吧'
-                    return render(request, 'reader_login.html', {'error': error})
-
+        verifycode = request.POST['verifycode'].lower()
+        verifycode1 = request.session['verifycode'].lower()
+        if verifycode == verifycode1:
+            users = StuUser.objects.all()
+            for user in users:
+                if user.username == username and pwd == user.password:
+                    if user.is_active:
+                        request.session['uid'] = user.id
+                        return redirect(reverse('books:reader'))
+                    else:
+                        error = '您的账户未激活，赶紧去激活登录吧'
+                        return render(request, 'reader_login.html', {'error': error})
+            else:
+                error = '您的密码或者用户名错误！请重新输入'
+                return render(request, 'reader_login.html', {'error': error})
         else:
-            error = '您的密码或者用户名错误！请重新输入'
+            error = '验证码错误，请重新输入'
             return render(request, 'reader_login.html', {'error': error})
+
+
+def verify(request):
+    # 定义变量，用于画面的背景色、宽、高
+    bgcolor = (random.randrange(20, 100),
+               random.randrange(20, 100),
+               random.randrange(20, 100))
+    width = 100
+    heigth = 25
+    # 创建画面对象
+    im = Image.new('RGB', (width, heigth), bgcolor)
+    # 创建画笔对象
+    draw = ImageDraw.Draw(im)
+    # 调用画笔的point()函数绘制噪点
+    for i in range(0, 100):
+        xy = (random.randrange(0, width), random.randrange(0, heigth))
+        fill = (random.randrange(0, 255), 255, random.randrange(0, 255))
+        draw.point(xy, fill=fill)
+    # 定义验证码的备选值
+    str1 = 'ABCD123EFGHIJK456LMNOPQRS789TUVWXYZ0asdfghjklqwertyuiopmnbvcxz'
+    # 随机选取4个值作为验证码
+    rand_str = ''
+    for i in range(0, 4):
+        rand_str += str1[random.randrange(0, len(str1))]
+    # 构造字体对象
+    font = ImageFont.truetype('LCALLIG.TTF', random.randrange(20, 25))
+    fontcolor = (255, random.randrange(0, 255), random.randrange(0, 255))
+    # # 绘制4个字
+    draw.text((5, 1), rand_str[0], font=font, fill=fontcolor)
+    draw.text((25, 1), rand_str[1], font=font, fill=fontcolor)
+    draw.text((50, 1), rand_str[2], font=font, fill=fontcolor)
+    draw.text((75, 1), rand_str[3], font=font, fill=fontcolor)
+
+    # draw.text((5, 2), rand_str[0], )
+    # draw.text((25, 2), rand_str[1], )
+    # draw.text((50, 2), rand_str[2],)
+    # draw.text((75, 2), rand_str[3],)
+    # 释放画笔
+    del draw
+    request.session['verifycode'] = rand_str
+    f = io.BytesIO()
+    im.save(f, 'png')
+    # 将内存中的图片数据返回给客户端，MIME类型为图片png
+    return HttpResponse(f.getvalue(), 'image/png')
 
 
 def register(request):
@@ -76,8 +132,10 @@ def register(request):
                         StuUser.objects.create(username=name, password=pwd2,
                                                college=college, sno=sno, email=email, is_active=False).save()
                         sid = StuUser.objects.get(username=name).id
-                        send_mail('账号激活', '<a href="http://192.168.12.162:8000/books/active/%s">点我激活账号</a>' % (sid, ),
-                                  settings.DEFAULT_FROM_EMAIL, [email])
+                        serutil = Serializer(settings.SECRET_KEY, 600)
+                        uid = serutil.dumps({'uid': sid}).decode('utf-8')
+                        send_mail('账号激活', '<a href="http://192.168.12.162:8000/books/active/%s">点我激活账号</a>'
+                                  % (uid, ), settings.DEFAULT_FROM_EMAIL, [email])
                         return redirect(reverse('books:user_login'))
                     else:
                         error = '学号已经存在'
@@ -94,10 +152,16 @@ def register(request):
 
 
 def active(request, sid):
-    user = StuUser.objects.get(pk=sid)
-    user.is_active = True
-    user.save()
-    return redirect(reverse('books:user_login'))
+    try:
+        dserutil = Serializer(settings.SECRET_KEY, 600)
+        obj = dserutil.loads(sid)
+        sid = obj['uid']
+        user = StuUser.objects.get(pk=sid)
+        user.is_active = True
+        user.save()
+        return redirect(reverse('books:user_login'))
+    except SignatureExpired as e:
+        return HttpResponse('过期了')
 
 
 def reader(request):
@@ -228,3 +292,19 @@ def edit(request):
         art = Article(title=title, content=message)
         art.save()
         return redirect(reverse('manager:index'))
+
+
+def ajax(request):
+    if request.method == 'GET':
+        return render(request, 'ajax.html')
+
+
+def ajaxload(request):
+    if request.method == 'GET':
+        return HttpResponse('GET请求成功')
+    else:
+        return HttpResponse('POST请求成功')
+
+
+def option(request):
+    return render(request, 'option.html')

@@ -4,6 +4,23 @@
 	<a href="{% url 'books:index' %}"> 返回   </a>|
 	<a href="{% url 'books:register' %}"> 注册 </a>
 {% endblock%}
+
+{% block src %}
+
+	<script type="text/javascript" charset="utf-8">
+		
+		$(function(){
+			$('#image1').click(function () {
+				console.log('%%%%%%%%');
+				this.src = '/books/verify/'+'?time='+new Date().getTime();
+			})
+		})
+		
+	</script>
+	
+{% endblock %}
+
+
 {% block body %}
 	<h2> 读者登录 </h2>
 	{% if error %}
@@ -18,6 +35,8 @@
 	    <dd><input type=text name=username size=30 required> </dd>
 	    <dt>密码:	 </dt>
 	    <dd><input type=password name=password size=30 required> </dd>
+		<dt><img id="image1" src="{% url 'books:verify' %}" alt="验证码加载失败!" ></dt>
+		<dd><input type=text name=verifycode size=30 required> </dd>
 	  </dl>
 	  <div class=actions>
 	    <input type=submit value="登录">
